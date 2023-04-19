@@ -1,0 +1,23 @@
+name: CI / CD
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    uses: ./.github/workflows/reusable-ci.yaml
+
+  version:
+    needs: [ci]
+    uses: ./.github/workflows/reusable-bump-version.yaml
+
+  deploy-client:
+    needs: [version]
+    uses: ./.github/workflows/reusable-deploy-client.yaml
+    secrets: inherit

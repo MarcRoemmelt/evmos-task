@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@evmos-task/common/data-access": ["libs/common/data-access/src/index.ts"],
+      "@evmos-task/common/ui": ["libs/common/ui/src/index.ts"],
+      "@evmos-task/common/util": ["libs/common/util/src/index.ts"],
+      "@evmos-task/common/value-objects": ["libs/common/value-objects/src/index.ts"],
+      "@evmos-task/tokens/domain": ["libs/tokens/domain/src/index.ts"],
+      "@evmos-task/tokens/features/account-selector": ["libs/tokens/features/account-selector/src/index.ts"],
+      "@evmos-task/tokens/features/tokens-list": ["libs/tokens/features/tokens-list/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

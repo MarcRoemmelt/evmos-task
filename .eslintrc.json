@@ -1,0 +1,63 @@
+{
+  "extends": [],
+  "root": true,
+  "ignorePatterns": ["!**/*"],
+  "plugins": ["@nrwl/nx", "prettier", "import", "simple-import-sort", "unused-imports"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript", "plugin:prettier/recommended"],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "endOfLine": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript", "plugin:prettier/recommended"],
+      "rules": {}
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    }
+  ],
+  "rules": {
+    "import/order": 0, // turn off in favor of eslint-plugin-simple-import-sort
+    "import/no-unresolved": 0,
+    "import/no-duplicates": 1,
+
+    /**
+     * eslint-plugin-simple-import-sort @see https://github.com/lydell/eslint-plugin-simple-import-sort
+     */
+    "sort-imports": 0, // we use eslint-plugin-import instead
+    "simple-import-sort/imports": [
+      1,
+      {
+        "groups": [
+          // Side effect imports.
+          ["^\\u0000"],
+          // Node.js builtins prefixed with `node:`.
+          ["^node:"],
+          // Packages.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ["^@?\\w"],
+          // Absolute imports and other imports such as Vue-style `@/foo`.
+          // Anything not matched in another group.
+          ["^"],
+          // Internal packages.
+          ["^@evmos-task(/.*|$)"],
+          // Relative imports.
+          // Anything that starts with a dot.
+          ["^\\."]
+        ]
+      }
+    ],
+    "simple-import-sort/exports": 1
+  }
+}

@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+pnpm nx affected --targets=lint,test,e2e,build
+wait
