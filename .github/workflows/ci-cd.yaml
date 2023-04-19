@@ -12,27 +12,37 @@ concurrency:
 jobs:
   shas:
     runs-on: ubuntu-latest
+    outputs:
+      NX_BASE: ${{ steps.output.outputs.NX_BASE }}
+      NX_HEAD: ${{ steps.output.outputs.NX_HEAD }}
     steps:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
 
+      - name: Expose env
+        id: output
+        run: |
+          echo "NX_BASE=${{ env.NX_BASE }}" >> $GITHUB_ENV
+          echo "NX_HEAD=${{ env.NX_HEAD }}" >> $GITHUB_ENV
+
   ci:
+    needs: [shas]
     uses: ./.github/workflows/reusable-ci.yaml
     with:
-      NX_BASE: ${{ env.NX_BASE }}
-      NX_HEAD: ${{ env.NX_HEAD }}
+      NX_BASE: ${{ needs.shas.outputs.NX_BASE }}
+      NX_HEAD: ${{ needs.shas.outputs.NX_HEAD }}
 
   version:
-    needs: [ci]
+    needs: [shas, ci]
     uses: ./.github/workflows/reusable-bump-version.yaml
     with:
-      NX_BASE: ${{ env.NX_BASE }}
-      NX_HEAD: ${{ env.NX_HEAD }}
+      NX_BASE: ${{ needs.shas.outputs.NX_BASE }}
+      NX_HEAD: ${{ needs.shas.outputs.NX_HEAD }}
 
   deploy-client:
-    needs: [version]
+    needs: [shas, version]
     uses: ./.github/workflows/reusable-deploy-client.yaml
     secrets: inherit
     with:
-      NX_BASE: ${{ env.NX_BASE }}
-      NX_HEAD: ${{ env.NX_HEAD }}
+      NX_BASE: ${{ needs.shas.outputs.NX_BASE }}
+      NX_HEAD: ${{ needs.shas.outputs.NX_HEAD }}
