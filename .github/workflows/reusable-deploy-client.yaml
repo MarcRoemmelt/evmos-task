@@ -49,7 +49,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
         with:
-          workflow-id: ci-dc.yml
+          workflow-id: ci-cd.yaml
 
       - name: Install Vercel CLI
 

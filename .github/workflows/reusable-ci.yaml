@@ -114,7 +114,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
         with:
-          workflow-id: ci-dc.yml
+          workflow-id: ci-cd.yaml
 
       - run: pnpm exec nx affected --target=lint --parallel=3
 
@@ -154,7 +154,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
         with:
-          workflow-id: ci-dc.yml
+          workflow-id: ci-cd.yaml
 
       - name: Run Tests
         run: pnpm exec nx affected --targets=test,e2e --parallel=3
