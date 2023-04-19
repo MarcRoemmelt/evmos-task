@@ -2,9 +2,18 @@ name: CI (reusable)
 
 on:
   workflow_call:
+    inputs:
+      NX_BASE:
+        required: true
+        type: string
+      NX_HEAD:
+        required: true
+        type: string
 
 env:
   cache-name: cache-node-modules
+  NX_BASE: ${{ secrets.NX_BASE }}
+  NX_HEAD: ${{ inputs.NX_HEAD }}
 
 jobs:
   outdated:
@@ -111,11 +120,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
-        with:
-          workflow-id: ci-cd.yaml
-
       - run: pnpm exec nx affected --target=lint --parallel=3
 
   test:
@@ -150,11 +154,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
-        with:
-          workflow-id: ci-cd.yaml
 
       - name: Run Tests
         run: pnpm exec nx affected --targets=test,e2e --parallel=3

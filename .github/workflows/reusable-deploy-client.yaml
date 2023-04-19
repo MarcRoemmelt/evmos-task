@@ -2,10 +2,27 @@ name: Deploy Client (reusable)
 
 on:
   workflow_call:
+    inputs:
+      NX_BASE:
+        required: true
+        type: string
+      NX_HEAD:
+        required: true
+        type: string
+    secrets:
+      VERCEL_ORG_ID:
+        required: true
+      VERCEL_PROJECT_ID:
+        required: true
+      VERCEL_TOKEN:
+        required: true
 
 env:
+  cache-name: cache-node-modules
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NX_BASE: ${{ secrets.NX_BASE }}
+  NX_HEAD: ${{ inputs.NX_HEAD }}
 
 jobs:
   build-and-deploy:
@@ -45,11 +62,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
-        with:
-          workflow-id: ci-cd.yaml
 
       - name: Install Vercel CLI
 

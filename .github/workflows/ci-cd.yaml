@@ -10,14 +10,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  shas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
   ci:
     uses: ./.github/workflows/reusable-ci.yaml
+    with:
+      NX_BASE: ${{ env.NX_BASE }}
+      NX_HEAD: ${{ env.NX_HEAD }}
 
   version:
     needs: [ci]
     uses: ./.github/workflows/reusable-bump-version.yaml
+    with:
+      NX_BASE: ${{ env.NX_BASE }}
+      NX_HEAD: ${{ env.NX_HEAD }}
 
   deploy-client:
     needs: [version]
     uses: ./.github/workflows/reusable-deploy-client.yaml
     secrets: inherit
+    with:
+      NX_BASE: ${{ env.NX_BASE }}
+      NX_HEAD: ${{ env.NX_HEAD }}
