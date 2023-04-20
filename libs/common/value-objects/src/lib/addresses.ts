@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { ValueObject } from 'zod-value-object';
 
 window.Buffer = Buffer;
-window.global = window;
 
 const AddressSchema = z.lazy(() =>
   z

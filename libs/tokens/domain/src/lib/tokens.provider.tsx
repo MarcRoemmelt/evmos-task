@@ -4,6 +4,7 @@ import { useHttp } from '@evmos-task/common/data-access';
 
 import { TokensFacade } from './application/tokens.facade';
 import { CoinGeckoService } from './infrastructure/coin-gecko.service';
+import { EthersService } from './infrastructure/ethers.service';
 import { EvmosService } from './infrastructure/evmos.service';
 
 const TokensContext = createContext<TokensFacade>(null as unknown as TokensFacade);
@@ -25,8 +26,9 @@ export const TokensProvider = ({ children }: ITokensProviderOptions) => {
   /* Create Facade as entrypoint to domain for all features */
   const tokensFacade = useMemo(() => {
     if (cached) return cached;
+    const ethersService = new EthersService();
     const coinGeckoService = new CoinGeckoService(coinGeckoHttp);
-    const evmosService = new EvmosService(http);
+    const evmosService = new EvmosService(http, ethersService);
     return new TokensFacade(evmosService, coinGeckoService);
   }, [coinGeckoHttp, http]);
 

@@ -24,7 +24,7 @@ export default defineConfig({
   ],
 
   define: {
-    global: {},
+    global: '({})',
   },
 
   // Uncomment this if you are using workers.
