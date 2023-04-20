@@ -51,16 +51,29 @@ The project split into layers:
 ## Challenges
 
 Becoming familiar with various Bockchain specific concepts such as Tokens/Coins and how to query them.
+
 What is the difference between Evmos EthAddresses, Cosmos Addresses, and Hex Addresses?
+
+Overall, documentation within the Blockchain space exists but could be more discoverable and homogenous to facilitate quicker onboarding for new developers.
 
 ## Focus Points
 
-Maintainability and scalability of the project were key consideration.
-The project is build to facilitate future changes and not as a quick one-off solution.
+Maintainability and scalability of the project were key consideration, i.e. making it easy to test and develop.
+It showcases several design choices for React applications to this end (e.g. the decision to keep the domain layers mostly void of React specific code).
 
-## Corners Cut
+## Shortcomings
 
-- Missing backend service
-- No proper error handling / reporting
-- Styling / UX is not great
-- No UI Tests / Storybook
+**Missing backend service:**
+I decided against adding a backend service even though many features of this application would benefit from it (e.g. using CoinGeck Pro to avoid rate-limiting, different blockchain specific libraries are build for a NodeJS environment, optimizing request payloads). Reasons were time constraints and me valuing the separation of client & server code. That being said, for production use a backend has to be added. Either via NextJS as suggested or via dedicated API service.
+
+**Error handling:**
+The app contains only minimal error-handling and reporting. E.g. failed api-requests are only recoverable via reload.
+
+**UI/UX:**
+The UI is barely more than a wireframe and build to be functional. Given that I, as developer/engineer, excell at implementation and not design I avoided investing time into improved UI/UX since time was limited.
+
+**Tests / Storybook:**
+The probject only contains unit tests for domain logic and rudimentary e2e tests. Going forward it would be very valuable to add Storybook/UI tests to ensure accessibliity, styling, responsiveness, etc, as well as adding e2e tests and integration tests where appropriate.
+
+
+
