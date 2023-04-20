@@ -37,15 +37,8 @@ jobs:
       NX_BASE: ${{ needs.shas.outputs.NX_BASE }}
       NX_HEAD: ${{ needs.shas.outputs.NX_HEAD }}
 
-  version:
-    needs: [shas, ci]
-    uses: ./.github/workflows/reusable-bump-version.yaml
-    with:
-      NX_BASE: ${{ needs.shas.outputs.NX_BASE }}
-      NX_HEAD: ${{ needs.shas.outputs.NX_HEAD }}
-
   deploy-client:
-    needs: [shas, version]
+    needs: [shas]
     uses: ./.github/workflows/reusable-deploy-client.yaml
     secrets: inherit
     with:

@@ -72,16 +72,6 @@
       "options": {
         "buildTarget": "client:build"
       }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "preset": "conventional",
-        "noVerify": true,
-        "skipRootChangelog": true,
-        "skipProjectChangelog": true,
-        "commitMessageFormat": "chore(${projectName}): bump version to ${version} [skip ci]"
-      }
     }
   },
   "tags": []
